@@ -5,19 +5,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>BeausCatGame</title>
 
-  <link rel="shortcut icon" href="TemplateData/favicon.ico">
-  <link rel="stylesheet" href="TemplateData/style.css">
+  <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGame@main/TemplateData/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/BeauTheBean/BeausCatGame@main/TemplateData/style.css">
 
   <style>
-    body { margin: 0; overflow: hidden; background: black; }
+    body { margin: 0; overflow: hidden; background: #000; }
     #unity-container { position: absolute; width: 100%; height: 100%; }
-    #unity-canvas { width: 100%; height: 100%; background: black; }
-    #unity-loading-bar {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+    #unity-canvas { width: 100%; height: 100%; background: #000; }
+    #unity-loading-bar { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
   </style>
 </head>
 
@@ -38,10 +33,12 @@
   const loadingBar = document.querySelector("#unity-loading-bar");
   const progressBarFull = document.querySelector("#unity-progress-bar-full");
 
-  // 🔥 CHANGE THIS IF YOU UPLOAD TO DIFFERENT HOST
-  const buildUrl = "Build";
+  function showError(msg) {
+    console.error(msg);
+  }
 
-  const loaderUrl = buildUrl + "/BeausCatGame.loader.js";
+  // 🔥 UPDATED BUILD PATH (THIS IS THE ONLY IMPORTANT CHANGE)
+  const buildUrl = "Build";
 
   const config = {
     dataUrl: buildUrl + "/BeausCatGame.data",
@@ -52,6 +49,8 @@
     productName: "BeausCatGame",
     productVersion: "0.1"
   };
+
+  const loaderUrl = buildUrl + "/BeausCatGame.loader.js";
 
   loadingBar.style.display = "block";
 
@@ -66,13 +65,13 @@
       loadingBar.style.display = "none";
 
     }).catch((message) => {
-      console.error(message);
+      showError(message);
       alert(message);
     });
   };
 
   script.onerror = () => {
-    alert("Failed to load Unity loader.js");
+    showError("Failed to load loader.js");
   };
 
   document.body.appendChild(script);
